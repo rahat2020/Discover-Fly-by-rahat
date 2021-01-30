@@ -4,11 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flight Booking</title>
+    <title>Flight Booking by rahat</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
         rel="stylesheet">
+    <!-- botstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -27,7 +30,9 @@
     </header>
 
     <!--Booking Section-->
-    <main class="main-content container">
+    >
+    <section id="cart-area" class="main-content container">
+
         <div class="booking-form">
             <h3>Booking Flights</h3>
             <div class="input-group">
@@ -110,7 +115,7 @@
                     </div>
                 </div>
             </div>
-            <button class="btn-style">Book Now</button>
+            <button id="bookNow-btn" class="btn-style">Book Now</button>
         </div>
 
         <div class="booking-content">
@@ -119,136 +124,77 @@
                 veniam libero autem quasi maxime ullam vero nama imi dolor, architecto ab facilis eaque deserunt nobise
                 voluptatibus quam</p>
         </div>
-        </section>
-        <script>
+    </section>
+    <div id="order-confirm-area">
+        <div class="card text-center shadow">
+            <div class="card-body">
+                <h1>Thank you for your order</h1>
+                <p class="card-text">your order has been confirmed</p>
+                <p class="card-text text-info">Order Number:i05dd85oha</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function firstAndEconomyTicket(product, isIncrease) {
+            const ticketIncrease = document.getElementById(product + '-count');
+            console.log('ticketIncrease.value');
+            const ticketCount = parseInt(ticketIncrease.value);
+            // const ticketNewCount = ticketCount - 1;
+            let ticketNewCount = ticketCount;
+            if (isIncrease == true) {
+                ticketNewCount = ticketCount + 1;
+            };
+            if (isIncrease == false && ticketCount > 0) {
+                ticketNewCount = ticketCount - 1;
+            };
+            document.getElementById(product + '-count').value = ticketNewCount;
+            // ticketIncrease.value = ticketNewCount;
+            // const ticketTotal = ticketNewCount * 150;
 
+            let ticketTotal = 0;
+            if (product == 'first') {
+                ticketTotal = ticketNewCount * 150;
+            };
+            if (product == 'economy') {
+                ticketTotal = ticketNewCount * 100;
+            };
+            document.getElementById(product + '-total').innerText = '$' + ticketTotal;
 
-            function firstAndEconomyTicket(product, isIncrease) {
-                const ticketIncrease = document.getElementById(product + '-count');
-                console.log('ticketIncrease.value');
-                const ticketCount = parseInt(ticketIncrease.value);
-                // const ticketNewCount = ticketCount - 1;
-                let ticketNewCount = ticketCount;
-                if (isIncrease == true) {
-                    ticketNewCount = ticketCount + 1;
-                }
-                if (isIncrease == false && ticketCount > 0) {
-                    ticketNewCount = ticketCount - 1;
-                }
-                document.getElementById(product + '-count').value = ticketNewCount;
-                // ticketIncrease.value = ticketNewCount;
-                // const ticketTotal = ticketNewCount * 150;
+            calculateTotal();
+        };
 
-                let ticketTotal = 0;
-                if (product == 'first') {
-                    ticketTotal = ticketNewCount * 150;
-                }
-                if (product == 'economy') {
-                    ticketTotal = ticketNewCount * 100;
-                }
-                document.getElementById(product + '-total').innerText = '$' + ticketTotal;
+        function calculateTotal() {
+            // const firstInput = document.getElementById('first-count');
+            // const firstCount = parseInt(firstInput.value);
+            const firstCount = getInputValue('first');
+            const economyCount = getInputValue('economy');
 
-                calculateTotal();
-            }
+            ///total price part/////
+            const totalPrice = firstCount * 150 + economyCount * 100;
+            document.getElementById('total-price').innerText = '$' + totalPrice;
 
-            function calculateTotal() {
-                // const firstInput = document.getElementById('first-count');
-                // const firstCount = parseInt(firstInput.value);
-                const firstCount = getInputValue('first');
-                const economyCount = getInputValue('economy');
+            ////////vat part/////
+            const vat = totalPrice * 0.1;
+            document.getElementById('tax-amount').innerText = '$' + vat;
+            // ///grand total price/////
+            const grandTotal = totalPrice + vat;
+            document.getElementById('grand-total').innerText = '$' + grandTotal;
 
-                ///total price part/////
-                const totalPrice = firstCount * 150 + economyCount * 100;
-                document.getElementById('total-price').innerText = '$' + totalPrice;
-                
-                ////////vat part/////
-                const vat = totalPrice * 0.1;
-                document.getElementById('tax-amount').innerText = '$' + vat;
-                // ///grand total price/////
-                const grandTotal = totalPrice + vat;
-                document.getElementById('grand-total').innerText = '$' + grandTotal;
+        };
+        function getInputValue(product) {
+            const economyInput = document.getElementById(product + '-count');
+            const economyCount = parseInt(economyInput.value);
+            return economyCount;
+        };
 
-            }
-            function getInputValue(product) {
-                const economyInput = document.getElementById(product + '-count');
-                const economyCount = parseInt(economyInput.value);
-                return economyCount;
-            }
+        // checkout product
+        document.getElementById('bookNow-btn').addEventListener('click', function () {
+            document.getElementById('cart-area').style.display = 'none';
+            document.getElementById('order-confirm-area').style.display = 'block';
+        });
 
-            // }
-            // function firstAndEconomyTicket(isIncrease) {
-            //     const ticketIncrease = document.getElementById('ticket-count');
-            //     console.log('ticketIncrease.value');
-            //     const ticketCount = parseInt(ticketIncrease.value);
-            //     // const ticketNewCount = ticketCount - 1;
-            //     let ticketNewCount = ticketCount;
-            //     if (isIncrease == true) {
-            //         ticketNewCount = ticketCount + 1;
-            //     }
-            //     if (isIncrease == false && ticketCount > 0) {
-            //         ticketNewCount = ticketCount - 1;
-            //     }
-            //     ticketIncrease.value = ticketNewCount;
-            //     const ticketTotal = ticketNewCount * 150;
-            //     document.getElementById('ticket-total').innerText = '$' + ticketTotal;
-            // }
-
-
-            // function EconomyTicket(isIncrease) {
-            //     const economyIncrease = document.getElementById('economy-count');
-            //     const economyTicketCount = parseInt(economyIncrease.value);
-            //     // const economyTicketNewCount = economyTicketCount - 1;
-            //     let economyTicketNewCount = economyTicketCount;
-            //     if (isIncrease == true) {
-            //         economyTicketNewCount = economyTicketCount + 1;
-            //     }
-            //     if (isIncrease == false && economyTicketCount > 0) {
-            //         economyTicketNewCount = economyTicketCount - 1;
-            //     }
-            //     economyIncrease.value = economyTicketNewCount;
-            //     const economyTicketTotal = economyTicketNewCount * 100;
-            //     document.getElementById('economy-total').innerText = '$' + economyTicketTotal;
-            // };
-
-
-
-
-
-
-
-
-
-             /////first class part//////////////////
-            // document.getElementById('ticket-increase').addEventListener('click', function () {
-            //     // const ticketIncrease = document.getElementById('ticket-count');
-            //     // console.log('ticketIncrease.value');
-            //     // const ticketCount = parseInt(ticketIncrease.value);
-            //     // const ticketNewCount = ticketCount + 1;
-            //     // ticketIncrease.value = ticketNewCount;
-            //     // const ticketTotal = ticketNewCount * 150;
-            //     // document.getElementById('ticket-total').innerText = '$' + ticketTotal;
-            //     firstAndEconomyTicket (true);
-            // })
-            // document.getElementById('ticket-decrease').addEventListener('click', function () {
-            //     ;
-            // })
-
-
-            /////economy part//////////////
-
-            // document.getElementById('economy-Increase').addEventListener('click', function () {
-            //     firstAndEconomyTicket(true);
-
-            // })
-
-            // document.getElementById('economy-Decrease').addEventListener('click', function () {
-
-            //     firstAndEconomyTicket(false);
-
-            // })
-
-        </script>
-        <!--Thank You-->
+    </script>
+    <!--Thank You-->
 </body>
 
 </html>

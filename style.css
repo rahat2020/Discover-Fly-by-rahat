@@ -125,3 +125,39 @@ nav ul li a:hover, a.active{
 #economy-plus, #economy-minus, #plus-clicked, #minus-clicked{
     cursor: pointer;
 }
+
+/* another part */
+/* body{
+    padding: 100px;
+}
+
+.submit-area{
+    margin-top: 50px;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 10px 5px 10px gray;
+  
+} */
+#order-confirm-area {
+	width: 100wh;
+	display: none;
+	height: 100vh;
+	background-color: #EE6666;
+}
+
+#order-confirm-area .card {
+	width: 35%;
+	margin: 0 auto;
+	padding-bottom: 25px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 40%;
+	border-radius: 15px;
+	background-color: #fff;
+}
+
+.card-body h1 {
+	font-weight: 700;
+	font-size: 50px;
+}
