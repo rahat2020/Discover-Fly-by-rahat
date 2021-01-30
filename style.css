@@ -122,6 +122,6 @@ nav ul li a:hover, a.active{
 }
 
 
-#ticket-increase, #ticket-decrease, #economy-Increase, #economy-Decrease{
+#economy-plus, #economy-minus, #plus-clicked, #minus-clicked{
     cursor: pointer;
 }
